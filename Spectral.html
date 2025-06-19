@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spectral - One of the best rr hacks join discord to see updates</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e, #0f0f23);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+            height: 100vh;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(120, 198, 255, 0.3) 0%, transparent 50%);
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        
+        .page {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        
+        header {
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 15px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: logoGlow 3s ease-in-out infinite alternate;
+            cursor: pointer;
+        }
+
+        @keyframes logoGlow {
+            from { filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.5)); }
+            to { filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.5)); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.2), rgba(78, 205, 196, 0.2));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.4), rgba(78, 205, 196, 0.4));
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        
+        .home-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .home-content h1 {
+            font-size: 5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titlePulse 4s ease-in-out infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .home-content p {
+            font-size: 1.8rem;
+            margin-bottom: 50px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 0.9; transform: translateY(0); }
+        }
+
+        .home-buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .main-btn {
+            padding: 20px 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.3);
+            animation: buttonFloat 3s ease-in-out infinite;
+        }
+
+        .main-btn:nth-child(2) { animation-delay: -1s; }
+        .main-btn:nth-child(3) { animation-delay: -2s; }
+
+        @keyframes buttonFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .main-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(255, 107, 107, 0.4);
+        }
+
+        .discord-btn {
+            background: linear-gradient(45deg, #7289da, #5865f2) !important;
+            box-shadow: 0 15px 35px rgba(114, 137, 218, 0.3) !important;
+        }
+
+        .discord-btn:hover {
+            box-shadow: 0 25px 50px rgba(114, 137, 218, 0.4) !important;
+        }
+
+        
+        .team-page {
+            padding-top: 120px;
+            padding-bottom: 50px;
+        }
+
+        .team-page h2 {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+            animation: cardFloat 6s ease-in-out infinite;
+        }
+
+        .team-card:nth-child(2) { animation-delay: -2s; }
+        .team-card:nth-child(3) { animation-delay: -4s; }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px) rotateY(0deg); }
+            50% { transform: translateY(-15px) rotateY(3deg); }
+        }
+
+        .team-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 30px 60px rgba(78, 205, 196, 0.2);
+        }
+
+        .team-card h3 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+
+        .team-card p {
+            opacity: 0.8;
+            font-size: 1.3rem;
+        }
+
+        
+        .products-page {
+            padding-top: 120px;
+            padding-bottom: 50px;
+        }
+
+        .products-page h2 {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .product-card:hover::before {
+            left: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 35px 70px rgba(69, 183, 209, 0.3);
+        }
+
+        .product-title {
+            font-size: 2.8rem;
+            margin-bottom: 35px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .pricing-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .price-option {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .price-option:hover {
+            border-color: #4ecdc4;
+            background: rgba(78, 205, 196, 0.15);
+            transform: scale(1.05);
+        }
+
+        .price-option h4 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: #4ecdc4;
+        }
+
+        .price-option .price {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+
+        .buy-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .buy-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        
+        .reviews-page {
+            padding-top: 120px;
+            padding-bottom: 50px;
+        }
+
+        .reviews-page h2 {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, #96ceb4, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .review-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+            animation: reviewFloat 8s ease-in-out infinite;
+        }
+
+        .review-card:nth-child(2) { animation-delay: -2s; }
+        .review-card:nth-child(3) { animation-delay: -4s; }
+        .review-card:nth-child(4) { animation-delay: -6s; }
+
+        @keyframes reviewFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .review-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(150, 206, 180, 0.2);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 15px;
+        }
+
+        .review-info h4 {
+            color: #4ecdc4;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .stars {
+            color: #ffd700;
+            font-size: 1.2rem;
+        }
+
+        .review-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        
+        @media (max-width: 768px) {
+            .home-content h1 { font-size: 3rem; }
+            .home-content p { font-size: 1.3rem; }
+            .home-buttons { flex-direction: column; align-items: center; }
+            .main-btn { width: 80%; max-width: 300px; }
+            .nav-links { gap: 10px; }
+            .nav-btn { padding: 10px 20px; font-size: 0.9rem; }
+            .products-grid { grid-template-columns: 1fr; }
+            .pricing-options { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: 1fr; }
+            .reviews-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="particles"></div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo" onclick="showPage('home')">SPECTRAL</div>
+                <ul class="nav-links">
+                    <li><button class="nav-btn" onclick="showPage('team')">Developers</button></li>
+                    <li><button class="nav-btn" onclick="showPage('products')">Buy Keys</button></li>
+                    <li><button class="nav-btn" onclick="showPage('reviews')">Reviews</button></li>
+                    <li><a href="https://discord.gg/qux744cRM2" target="_blank" class="nav-btn discord-btn">Discord</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    
+    <div id="home" class="page active">
+        <div class="home-page">
+            <div class="container">
+                <div class="home-content">
+                    <h1>Welcome to Spectral</h1>
+                    <p>Best rr cheats join discord for help and to claim your key!</p>
+                    <div class="home-buttons">
+                        <button class="main-btn discord-btn" onclick="window.open('https://discord.gg/qux744cRM2', '_blank')">Join Discord</button>
+                        <button class="main-btn" onclick="showPage('team')">Meet Developers</button>
+                        <button class="main-btn" onclick="showPage('products')">Buy Keys</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <div id="team" class="page">
+        <div class="team-page">
+            <div class="container">
+                <h2>Meet Our Developers</h2>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <h3>Landon</h3>
+                        <p>Owner & Head Coder</p>
+                    </div>
+                    <div class="team-card">
+                        <h3>Ducky</h3>
+                        <p>Website & Lua Developer</p>
+                    </div>
+                    <div class="team-card">
+                        <h3>Omni</h3>
+                        <p>Spectral V1/V2 Lua Developer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="products" class="page">
+        <div class="products-page">
+            <div class="container">
+                <h2>Choose Your Key</h2>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <h3 class="product-title">Spectral V1</h3>
+                        <div class="pricing-options">
+                            <div class="price-option" onclick="redirectToStripe('spectral-v1-lifetime')">
+                                <h4>Lifetime</h4>
+                                <div class="price">$60</div>
+                                <button class="buy-btn">Buy Now</button>
+                            </div>
+                            <div class="price-option" onclick="redirectToStripe('spectral-v1-month')">
+                                <h4>Month</h4>
+                                <div class="price">$35</div>
+                                <button class="buy-btn">Buy Now</button>
+                            </div>
+                            <div class="price-option" onclick="redirectToStripe('spectral-v1-week')">
+                                <h4>Week</h4>
+                                <div class="price">$15</div>
+                                <button class="buy-btn">Buy Now</button>
+                            </div>
+                            <div class="price-option" onclick="redirectToStripe('spectral-v1-day')">
+                                <h4>Day</h4>
+                                <div class="price">$5</div>
+                                <button class="buy-btn">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <h3 class="product-title">Spectral V2</h3>
+                        <div class="pricing-options">
+                            <div class="price-option" onclick="redirectToStripe('spectral-v2-lifetime')">
+                                <h4>Lifetime</h4>
+                                <div class="price">$40</div>
+                                <button class="buy-btn">Buy Now</button>
+                            </div>
+                            <div class="price-option" onclick="redirectToStripe('spectral-v2-month')">
+                                <h4>Month</h4>
+                                <div class="price">$30</div>
+                                <button class="buy-btn">Buy Now</button>
+                            </div>
+                            <div class="price-option" onclick="redirectToStripe('spectral-v2-week')">
+                                <h4>Week</h4>
+                                <div class="price">$10</div>
+                                <button class="buy-btn">Buy Now</button>
+                            </div>
+                            <div class="price-option" onclick="redirectToStripe('spectral-v2-day')">
+                                <h4>Day</h4>
+                                <div class="price">$5</div>
+                                <button class="buy-btn">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="reviews" class="page">
+        <div class="reviews-page">
+            <div class="container">
+                <h2>Customer Reviews</h2>
+                <div class="reviews-grid">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="review-avatar">JD</div>
+                            <div class="review-info">
+                                <h4>John_Doe</h4>
+                                <div class="stars">★★★★★</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"One of the best rr cheats i ever seen!!"</p>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="review-avatar">GM</div>
+                            <div class="review-info">
+                                <h4>GamerMike</h4>
+                                <div class="stars">★★★★★</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"Yall should buy these cheats are rlly nice"</p>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="review-avatar">PR</div>
+                            <div class="review-info">
+                                <h4>ProRaider</h4>
+                                <div class="stars">★★★★★</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"Owners are rlly nice and they called me one on one an showed me how to use it"</p>
+                    </div>
+
+                 
+                    
+
+                    
+    <script>
+        
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        
+        function showPage(pageId) {
+            
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        
+        function redirectToStripe(productType) {
+            
+            const stripeLinks = {
+                'spectral-v1-lifetime': 'https://buy.stripe.com/test_eVq4gy7n721l9c1czx18c03',
+                'spectral-v1-month': 'https://buy.stripe.com/test_14A5kC9vf9tNewl6b918c02',
+                'spectral-v1-week': 'https://buy.stripe.com/test_9B6cN49vf35pag59nl18c01',
+                'spectral-v1-day': 'https://buy.stripe.com/test_14AbJ0ePzfSb5ZPgPN18c00',
+                'spectral-v2-lifetime': 'https://buy.stripe.com/test_3cIcN47n7fSb5ZP6b918c07',
+                'spectral-v2-month': 'https://buy.stripe.com/test_7sYfZg22N0Xhdsh8jh18c05',
+                'spectral-v2-week': 'https://buy.stripe.com/test_00w5kC5eZeO79c1czx18c06',
+                'spectral-v2-day':'https://buy.stripe.com/test_fZu14mdLv49tcod0QP18c04'
+            };
+              
+
+            const link = stripeLinks[productType];
+            if (link) {
+                   window.open(link, '')   
+                
+            }
+        
+        }
+
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+        });
+
+        
+        document.addEventListener('mousemove', (e) => {
+            const homePage = document.querySelector('.home-page');
+            if (document.getElementById('home').classList.contains('active')) {
+                const rect = homePage.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const moveX = (x / rect.width - 0.5) * 15;
+                const moveY = (y / rect.height - 0.5) * 15;
+                
+                homePage.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
